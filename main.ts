@@ -51,36 +51,20 @@ function drawGrid () {
     }
     cursor.left = cursorX
     cursor.top = cursorY
-    neighborCountSprite.right = cursorX
-    neighborCountSprite.bottom = cursorY
+    neighborCountSprite.left = cursorX
+    neighborCountSprite.top = cursorY
     neighborCountSprite.setText(convertToText(countNeighbors(cursorGridCol, cursorGridRow)))
 }
 function countNeighbors (currentRow: number, currentCol: number) {
     neighborCount = 0
-    if (currentRow == 0 && currentCol == 0) {
-        neighborCount += grid[11][15]
-    } else if (currentRow == 0) {
-        neighborCount += grid[11][currentCol - 1]
-    } else {
-        neighborCount += grid[currentRow - 1][currentCol - 1]
-    }
-    if (currentRow == 0) {
-        neighborCount += grid[11][currentCol]
-    } else {
-        neighborCount += grid[currentRow - 1][currentCol - 0]
-    }
-    if (currentRow == 0 && currentCol == 15) {
-        neighborCount += grid[11][0]
-    } else if (currentRow == 0) {
-        neighborCount += grid[11][currentCol + 1]
-    } else {
-        neighborCount += grid[currentRow - 1][currentCol + 1]
-    }
-    if (currentCol == 0) {
-        neighborCount += grid[currentRow][currentCol]
-    } else {
-        neighborCount += grid[currentRow - 0][currentCol + 1]
-    }
+    neighborCount += grid[currentRow - 1][currentCol - 1]
+    neighborCount += grid[currentRow - 1][currentCol - 0]
+    neighborCount += grid[currentRow - 1][currentCol + 1]
+    neighborCount += grid[currentRow - 0][currentCol + 1]
+    neighborCount += grid[currentRow + 1][currentCol + 1]
+    neighborCount += grid[currentRow + 1][currentCol + 0]
+    neighborCount += grid[currentRow + 1][currentCol - 1]
+    neighborCount += grid[currentRow + 0][currentCol - 1]
     return neighborCount
 }
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -101,7 +85,7 @@ let cursorGridCol = 0
 let cursor: Sprite = null
 let grid: number[][] = []
 grid = []
-for (let row = 0; row <= 1; row++) {
+for (let row = 0; row <= 11; row++) {
     grid.push([])
     for (let column = 0; column <= 15; column++) {
         grid[row].push(0)
@@ -119,10 +103,10 @@ cursor = sprites.create(img`
     3 . . . . . . . . 3 
     3 3 3 3 . . 3 3 3 3 
     `, SpriteKind.newCursor)
-cursorGridCol = 0
-cursorGridRow = 0
-cursorX = 0
-cursorY = 0
+cursorGridCol = 7
+cursorGridRow = 5
+cursorX = 70
+cursorY = 50
 cursor.z = 10
 neighborCountSprite = textsprite.create("")
 neighborCountSprite.z = 10
